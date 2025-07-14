@@ -20,27 +20,37 @@ _Title "Hello again QB64!"
 
 Dim Shared As Double lastTime, dt
 lastTime = getTimer
-dim shared as double nextUpdateTick
+Dim Shared As Double nextUpdateTick
 
 Dim Shared As Double lastFPSTime
 Dim Shared As Integer fps, lastFPS
 
 
 INIT
+
+$If UNCAPPED Then
+
+  Do
+    NUpdate
+    NDraw
+  Loop Until done
+
+$Else
+
 Do
-  $If UNCAPPED Then
     ' Web version has a hard limit of the user's refresh rate
-  $Else
-    _Limit 60
-  $End If
+  _Limit 60
 
   dim now: now = getTimer
+  
   if now >= nextUpdateTick then
     nextUpdateTick = now + 1.0 / 60
     NUpdate
     NDraw
   end if
 Loop Until done
+
+$End If
 
 System
 
@@ -58,13 +68,8 @@ Function getTimer#
 End Function
 
 
-Sub NUpdate
-  If _KeyDown(K_ESC) Then done = true
-
+Sub incrementFPS
   Dim now: now = getTimer
-  dt = now - lastTime
-  lastTime = now
-
   If now >= lastFPSTime + 1.0 Then
     lastFPSTime = now
     lastFPS = fps
@@ -72,6 +77,25 @@ Sub NUpdate
   Else
     fps = fps + 1
   End If
+End Sub
+
+Sub drawFPS
+  Color &HFFFFFF00
+  _PrintString (240, 0), "FPS:" + Str$(lastFPS)
+  Color &HFFFFFFFF
+End Sub
+
+
+Sub NUpdate
+  Dim now: now = getTimer
+  dt = now - lastTime
+  lastTime = now
+
+  incrementFPS
+
+  ' Handle inputs
+  If _KeyDown(K_ESC) Then done = true
+
 End Sub
 
 
@@ -83,8 +107,7 @@ Sub NDraw
 
   _PrintString (8, 20), Str$(dt)
 
-  _PrintString (240, 0), "FPS:" + Str$(lastFPS)
-
+  drawFPS
 
   _PutImage , buffer, scaled
   _Display

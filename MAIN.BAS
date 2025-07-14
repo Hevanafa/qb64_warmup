@@ -1,8 +1,17 @@
 $Debug
-$Let UNCAPPED = 1
+$Let UNCAPPED = 0
 Option _Explicit
 
+' Implement module separation like unit files in Pascal
+' Maybe BMFont support?
+' Implement rotated sprite with a pair of triangles
+
 Const K_ESC = 27
+
+Const K_W = 119
+Const K_A = 97
+Const K_S = 115
+Const K_D = 100
 
 Const false = 0
 Const true = Not false
@@ -25,6 +34,8 @@ Dim Shared As Double nextUpdateTick
 Dim Shared As Double lastFPSTime
 Dim Shared As Integer fps, lastFPS
 
+Dim Shared As Integer x, y
+
 
 INIT
 
@@ -37,18 +48,18 @@ $If UNCAPPED Then
 
 $Else
 
-Do
+  Do
     ' Web version has a hard limit of the user's refresh rate
-  _Limit 60
+    _Limit 60
 
-  dim now: now = getTimer
+    Dim now: now = getTimer
   
-  if now >= nextUpdateTick then
-    nextUpdateTick = now + 1.0 / 60
-    NUpdate
-    NDraw
-  end if
-Loop Until done
+    If now >= nextUpdateTick Then
+      nextUpdateTick = now + 1.0 / 60
+      NUpdate
+      NDraw
+    End If
+  Loop Until done
 
 $End If
 
@@ -60,6 +71,9 @@ Sub INIT
   _Font 8
 
   Randomize Timer
+
+  x = 160
+  y = 100
 End Sub
 
 
@@ -96,6 +110,11 @@ Sub NUpdate
   ' Handle inputs
   If _KeyDown(K_ESC) Then done = true
 
+  If _KeyDown(K_W) Then y = y - 1
+  If _KeyDown(K_S) Then y = y + 1
+  If _KeyDown(K_A) Then x = x - 1
+  If _KeyDown(K_D) Then x = x + 1
+
 End Sub
 
 
@@ -106,6 +125,8 @@ Sub NDraw
   _PrintString (8, 8), "Hello again QB64!"
 
   _PrintString (8, 20), Str$(dt)
+
+  Circle (x, y), 5, &HFFFFFFFF
 
   drawFPS
 

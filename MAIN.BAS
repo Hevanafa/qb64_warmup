@@ -11,8 +11,8 @@ Const K_A = 97
 Const K_S = 115
 Const K_D = 100
 
-Const false = 0
-Const true = Not false
+Const False = 0
+Const True = Not False
 Const cornflowerBlue = &HFF6495ED
 
 Dim Shared buffer
@@ -21,7 +21,7 @@ buffer = _NewImage(320, 200, 32)
 scaled = _NewImage(640, 400, 32)
 Screen scaled: _Dest buffer: _Delay 0.1: _Display
 
-Dim Shared done: done = false
+Dim Shared done: done = False
 
 _Title "Hello again QB64!"
 
@@ -77,6 +77,10 @@ Sub NPrint (text As String, x As Integer, y As Integer, colour As Long)
   Color lastColour
 End Sub
 
+Sub NPset (x As Integer, y As Integer, colour As Long)
+  PSet (x, y), colour
+End Sub
+
 
 '$Include: 'INCLUDES\FPS.BM'
 '$Include: 'INCLUDES\CONV.BM'
@@ -100,7 +104,7 @@ Sub NUpdate
   incrementFPS
 
   ' Handle inputs
-  If isKeyDown(K_ESC) Then done = true
+  If isKeyDown(K_ESC) Then done = True
 
   If isKeyDown(K_W) Then y = y - 1
   If isKeyDown(K_S) Then y = y + 1
@@ -117,6 +121,8 @@ Sub NDraw
   NPrint f32str(dt), 8, 20, &HFFFFFFFF
 
   Circle (x, y), 5, &HFFFFFFFF
+
+  NPset 100, 100, &HFFFFFFFF
 
   drawFPS
 

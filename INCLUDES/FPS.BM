@@ -1,0 +1,16 @@
+Sub incrementFPS
+  Dim now: now = getTimer
+  If now >= lastFPSTime + 1.0 Then
+    lastFPSTime = now
+    lastFPS = fps
+    fps = 1
+  Else
+    fps = fps + 1
+  End If
+End Sub
+
+Sub drawFPS
+  Color &HFFFFFF00
+  _PrintString (240, 0), "FPS:" + Str$(lastFPS)
+  Color &HFFFFFFFF
+End Sub

@@ -1,10 +1,8 @@
 $Debug
 $Let UNCAPPED = 0
+'$Include: 'INCLUDES\FPS.BI'
 Option _Explicit
 
-' Implement module separation like unit files in Pascal
-' Maybe BMFont support?
-' Implement rotated sprite with a pair of triangles
 
 Const K_ESC = 27
 
@@ -30,9 +28,6 @@ _Title "Hello again QB64!"
 Dim Shared As Double lastTime, dt
 lastTime = getTimer
 Dim Shared As Double nextUpdateTick
-
-Dim Shared As Double lastFPSTime
-Dim Shared As Integer fps, lastFPS
 
 Dim Shared As Integer x, y
 
@@ -81,23 +76,7 @@ Function getTimer#
   getTimer = Timer(0.001)
 End Function
 
-
-Sub incrementFPS
-  Dim now: now = getTimer
-  If now >= lastFPSTime + 1.0 Then
-    lastFPSTime = now
-    lastFPS = fps
-    fps = 1
-  Else
-    fps = fps + 1
-  End If
-End Sub
-
-Sub drawFPS
-  Color &HFFFFFF00
-  _PrintString (240, 0), "FPS:" + Str$(lastFPS)
-  Color &HFFFFFFFF
-End Sub
+'$include: 'INCLUDES\FPS.BM'
 
 
 Sub NUpdate

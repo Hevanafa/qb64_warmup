@@ -61,6 +61,11 @@ $End If
 System
 
 
+function isKeyDown%(keycode as integer)
+  isKeyDown = _KeyDown(keycode)
+end function
+
+
 Function getTimer#
   getTimer = Timer(0.001)
 End Function
@@ -87,12 +92,12 @@ Sub NUpdate
   incrementFPS
 
   ' Handle inputs
-  If _KeyDown(K_ESC) Then done = true
+  If isKeyDown(K_ESC) Then done = true
 
-  If _KeyDown(K_W) Then y = y - 1
-  If _KeyDown(K_S) Then y = y + 1
-  If _KeyDown(K_A) Then x = x - 1
-  If _KeyDown(K_D) Then x = x + 1
+  If isKeyDown(K_W) Then y = y - 1
+  If isKeyDown(K_S) Then y = y + 1
+  If isKeyDown(K_A) Then x = x - 1
+  If isKeyDown(K_D) Then x = x + 1
 
 End Sub
 

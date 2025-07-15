@@ -1,8 +1,10 @@
 $Debug
 $Let UNCAPPED = 0
-'$Include: 'INCLUDES\VGA.BI'
-'$Include: 'INCLUDES\FPS.BI'
 Option _Explicit
+
+'$Include: 'INCLUDES\VGA.BI'
+'$Include: 'INCLUDES\TIMING.BI'
+'$Include: 'INCLUDES\FPS.BI'
 
 
 Const K_ESC = 27
@@ -23,8 +25,6 @@ Dim Shared As Integer x, y
 
 ' More of your game state here
 
-Dim Shared As Double lastTime, dt
-lastTime = getTimer
 Dim Shared As Double nextUpdateTick
 
 
@@ -64,14 +64,11 @@ Function isKeyDown% (keycode As Integer)
 End Function
 
 
-Function getTimer#
-  getTimer = Timer(0.001)
-End Function
-
 '$Include: 'INCLUDES\VGA.BM'
 '$Include: 'INCLUDES\BITMAP.BM'
-'$Include: 'INCLUDES\FPS.BM'
 '$Include: 'INCLUDES\CONV.BM'
+'$include: 'INCLUDES\TIMING.BM'
+'$Include: 'INCLUDES\FPS.BM'
 
 
 Sub INIT
@@ -93,10 +90,7 @@ Sub INIT
 End Sub
 
 Sub NUpdate
-  Dim now: now = getTimer
-  dt = now - lastTime
-  lastTime = now
-
+  updateDeltaTime
   incrementFPS
 
   ' Handle inputs

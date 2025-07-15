@@ -1,0 +1,11 @@
+$IncludeOnce
+
+Function getTimer#
+  getTimer = Timer(0.001)
+End Function
+
+sub updateDeltaTime
+  Dim now: now = getTimer
+  dt = now - lastTime
+  lastTime = now
+end sub

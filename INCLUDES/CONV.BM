@@ -1,9 +1,24 @@
 $IncludeOnce
 
+Const False = 0
+Const True = Not False
+
 Function i32str$ (value As Integer)
   i32str$ = LTrim$(Str$(value))
 End Function
 
 Function f32str$ (value As Double)
   f32str$ = LTrim$(Str$(value))
+End Function
+
+Function boolStr$ (value As Integer)
+  If value = False Then
+    boolStr$ = "False"
+  Else
+    boolStr$ = "True"
+  End If
+End Function
+
+Function parseInt% (text As String)
+  parseInt% = Val(text)
 End Function

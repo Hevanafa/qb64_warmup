@@ -1,5 +1,6 @@
 $Debug
 $Let UNCAPPED = 0
+'$Include: 'INCLUDES\VGA.BI'
 '$Include: 'INCLUDES\FPS.BI'
 Option _Explicit
 
@@ -15,12 +16,7 @@ Const False = 0
 Const True = Not False
 Const cornflowerBlue = &HFF6495ED
 
-common Shared as long surface, scaled
-surface = _NewImage(320, 200, 32)
-scaled = _NewImage(640, 400, 32)
-Screen scaled: _Dest surface: _Delay 0.1: _Display
-
-common Shared As Long imgMacJago
+Common Shared As Long imgMacJago
 Dim Shared done: done = False
 
 _Title "Hello again QB64!"
@@ -72,13 +68,15 @@ Function getTimer#
   getTimer = Timer(0.001)
 End Function
 
-
+'$Include: 'INCLUDES\VGA.BM'
 '$Include: 'INCLUDES\BITMAP.BM'
 '$Include: 'INCLUDES\FPS.BM'
 '$Include: 'INCLUDES\CONV.BM'
 
 
 Sub INIT
+  initBuffer
+
   ' Turns off black background of _PrintString
   _PrintMode _KeepBackground
   _Font 8

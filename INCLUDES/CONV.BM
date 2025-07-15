@@ -1,8 +1,5 @@
 $IncludeOnce
 
-Const False = 0
-Const True = Not False
-
 Function i32str$ (value As Integer)
   i32str$ = LTrim$(Str$(value))
 End Function

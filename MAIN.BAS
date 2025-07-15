@@ -5,6 +5,7 @@ Option _Explicit
 '$Include: 'INCLUDES\VGA.BI'
 '$Include: 'INCLUDES\TIMING.BI'
 '$Include: 'INCLUDES\FPS.BI'
+'$include: 'INCLUDES\CONV.BI'
 
 
 Const K_ESC = 27

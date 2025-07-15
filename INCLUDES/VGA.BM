@@ -1,3 +1,5 @@
+$IncludeOnce
+
 Sub NPrint (text As String, x As Integer, y As Integer, colour As Long)
   Dim lastColour: lastColour = _DefaultColor
   Color colour
@@ -7,4 +9,10 @@ End Sub
 
 Sub NPset (x As Integer, y As Integer, colour As Long)
   PSet (x, y), colour
+End Sub
+
+Sub initBuffer
+  surface = _NewImage(320, 200, 32)
+  scaled = _NewImage(640, 400, 32)
+  Screen scaled: _Dest surface: _Delay 0.1: _Display
 End Sub

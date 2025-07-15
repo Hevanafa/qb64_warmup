@@ -1,0 +1,10 @@
+Sub NPrint (text As String, x As Integer, y As Integer, colour As Long)
+  Dim lastColour: lastColour = _DefaultColor
+  Color colour
+  _PrintString (x, y), text
+  Color lastColour
+End Sub
+
+Sub NPset (x As Integer, y As Integer, colour As Long)
+  PSet (x, y), colour
+End Sub

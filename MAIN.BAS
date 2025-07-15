@@ -21,6 +21,7 @@ buffer = _NewImage(320, 200, 32)
 scaled = _NewImage(640, 400, 32)
 Screen scaled: _Dest buffer: _Delay 0.1: _Display
 
+common Shared As Long imgMacJago
 Dim Shared done: done = False
 
 _Title "Hello again QB64!"
@@ -58,6 +59,8 @@ $Else
 
 $End If
 
+freeImage imgMacJago
+
 System
 
 
@@ -70,18 +73,8 @@ Function getTimer#
   getTimer = Timer(0.001)
 End Function
 
-Sub NPrint (text As String, x As Integer, y As Integer, colour As Long)
-  Dim lastColour: lastColour = _DefaultColor
-  Color colour
-  _PrintString (x, y), text
-  Color lastColour
-End Sub
 
-Sub NPset (x As Integer, y As Integer, colour As Long)
-  PSet (x, y), colour
-End Sub
-
-
+'$Include: 'INCLUDES\BITMAP.BM'
 '$Include: 'INCLUDES\FPS.BM'
 '$Include: 'INCLUDES\CONV.BM'
 
@@ -94,6 +87,8 @@ Sub INIT
 
   x = 160
   y = 100
+
+  loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
 End Sub
 
 Sub NUpdate
@@ -123,6 +118,11 @@ Sub NDraw
   Circle (x, y), 5, &HFFFFFFFF
 
   NPset 100, 100, &HFFFFFFFF
+
+  ' nprint "Handle: " + i32str(imgMacJago), 10, 30, &HFFFFFFFF
+
+  spr imgMacJago, 10, 20
+  ' _putimage (10, 20), imgMacJago
 
   drawFPS
 

@@ -1,3 +1,5 @@
+$IncludeOnce
+
 Sub incrementFPS
   Dim now: now = getTimer
   If now >= lastFPSTime + 1.0 Then

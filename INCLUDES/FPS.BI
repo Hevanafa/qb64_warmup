@@ -1,3 +1,5 @@
-common Shared As Double lastFPSTime
-common Shared As Integer fps, lastFPS
+$IncludeOnce
+
+Common Shared As Double lastFPSTime
+Common Shared As Integer fps, lastFPS
 

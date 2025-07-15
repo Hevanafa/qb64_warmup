@@ -61,14 +61,22 @@ $End If
 System
 
 
-function isKeyDown%(keycode as integer)
+Function isKeyDown% (keycode As Integer)
   isKeyDown = _KeyDown(keycode)
-end function
+End Function
 
 
 Function getTimer#
   getTimer = Timer(0.001)
 End Function
+
+Sub NPrint (text As String, x As Integer, y As Integer, colour As Long)
+  Dim lastColour: lastColour = _DefaultColor
+  Color colour
+  _PrintString (x, y), text
+  Color lastColour
+End Sub
+
 
 '$Include: 'INCLUDES\FPS.BM'
 '$Include: 'INCLUDES\CONV.BM'
@@ -98,17 +106,15 @@ Sub NUpdate
   If isKeyDown(K_S) Then y = y + 1
   If isKeyDown(K_A) Then x = x - 1
   If isKeyDown(K_D) Then x = x + 1
-
 End Sub
 
 
 Sub NDraw
   Cls , cornflowerBlue
 
-  Color &HFFFFFFFF
-  _PrintString (8, 8), "Hello again QB64!"
+  NPrint "Hello again QB64!", 8, 8, &HFFFFFFFF
 
-  _PrintString (8, 20), f32str(dt)
+  NPrint f32str(dt), 8, 20, &HFFFFFFFF
 
   Circle (x, y), 5, &HFFFFFFFF
 

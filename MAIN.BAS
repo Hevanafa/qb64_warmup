@@ -16,16 +16,16 @@ Const False = 0
 Const True = Not False
 Const cornflowerBlue = &HFF6495ED
 
-Common Shared As Long imgMacJago
+' Game state
 Dim Shared done: done = False
+Common Shared As Long imgMacJago, imgTilemap
+Dim Shared As Integer x, y
 
-_Title "Hello again QB64!"
+' More of your game state here
 
 Dim Shared As Double lastTime, dt
 lastTime = getTimer
 Dim Shared As Double nextUpdateTick
-
-Dim Shared As Integer x, y
 
 
 INIT
@@ -77,6 +77,8 @@ End Function
 Sub INIT
   initBuffer
 
+  _Title "Hello again QB64!"
+
   ' Turns off black background of _PrintString
   _PrintMode _KeepBackground
   _Font 8
@@ -86,7 +88,8 @@ Sub INIT
   x = 160
   y = 100
 
-  loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
+  ' loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
+  loadImage imgTilemap, "IMG\tilemap.png"
 End Sub
 
 Sub NUpdate
@@ -119,7 +122,9 @@ Sub NDraw
 
   ' nprint "Handle: " + i32str(imgMacJago), 10, 30, &HFFFFFFFF
 
-  spr imgMacJago, 10, 20
+  ' spr imgMacJago, 10, 20
+  ' spr imgTilemap, 10, 10
+  sprRegion imgTilemap, 34, 17, 16, 16, 10, 30
   ' _putimage (10, 20), imgMacJago
   
 

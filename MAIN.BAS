@@ -15,11 +15,10 @@ Const False = 0
 Const True = Not False
 Const cornflowerBlue = &HFF6495ED
 
-Dim Shared buffer
-Dim Shared scaled
-buffer = _NewImage(320, 200, 32)
+common Shared as long surface, scaled
+surface = _NewImage(320, 200, 32)
 scaled = _NewImage(640, 400, 32)
-Screen scaled: _Dest buffer: _Delay 0.1: _Display
+Screen scaled: _Dest surface: _Delay 0.1: _Display
 
 common Shared As Long imgMacJago
 Dim Shared done: done = False
@@ -80,6 +79,7 @@ End Function
 
 
 Sub INIT
+  ' Turns off black background of _PrintString
   _PrintMode _KeepBackground
   _Font 8
 
@@ -123,10 +123,12 @@ Sub NDraw
 
   spr imgMacJago, 10, 20
   ' _putimage (10, 20), imgMacJago
+  
 
   drawFPS
 
-  _PutImage , buffer, scaled
+  _PutImage , surface, scaled
   _Display
 End Sub
+
 

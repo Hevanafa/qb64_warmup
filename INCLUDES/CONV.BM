@@ -1,7 +1,9 @@
-function i32str$(value as integer)
-  i32str$ = ltrim$(str$(value))
-end function
+$IncludeOnce
 
-function f32str$(value as double)
-  f32str$ = ltrim$(str$(value))
-end function
+Function i32str$ (value As Integer)
+  i32str$ = LTrim$(Str$(value))
+End Function
+
+Function f32str$ (value As Double)
+  f32str$ = LTrim$(Str$(value))
+End Function

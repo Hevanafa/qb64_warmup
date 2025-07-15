@@ -1,0 +1,7 @@
+function i32str$(value as integer)
+  i32str$ = ltrim$(str$(value))
+end function
+
+function f32str$(value as double)
+  f32str$ = ltrim$(str$(value))
+end function

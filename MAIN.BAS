@@ -61,6 +61,14 @@ $End If
 System
 
 
+Function getTimer#
+  getTimer = Timer(0.001)
+End Function
+
+'$Include: 'INCLUDES\FPS.BM'
+'$Include: 'INCLUDES\CONV.BM'
+
+
 Sub INIT
   _PrintMode _KeepBackground
   _Font 8
@@ -70,14 +78,6 @@ Sub INIT
   x = 160
   y = 100
 End Sub
-
-
-Function getTimer#
-  getTimer = Timer(0.001)
-End Function
-
-'$include: 'INCLUDES\FPS.BM'
-
 
 Sub NUpdate
   Dim now: now = getTimer
@@ -103,7 +103,7 @@ Sub NDraw
   Color &HFFFFFFFF
   _PrintString (8, 8), "Hello again QB64!"
 
-  _PrintString (8, 20), Str$(dt)
+  _PrintString (8, 20), f32str(dt)
 
   Circle (x, y), 5, &HFFFFFFFF
 

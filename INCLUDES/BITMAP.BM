@@ -1,0 +1,18 @@
+sub loadImage(target as long, filename as string)
+  target = _LoadImage(filename)
+  ' -1 is unset
+end sub
+
+sub freeImage(image as long)
+  if not isImageSet(image) then exit sub
+  _freeimage image
+end sub
+
+sub spr(imgHandle as long, x as integer, y as integer)
+  if not isImageSet(imgHandle) then exit sub
+  _PutImage (x, y), imgHandle
+end sub
+
+function isImageSet(imgHandle as long)
+  isImageSet = (imgHandle >= -1)
+end function

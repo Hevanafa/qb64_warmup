@@ -5,7 +5,7 @@ Option _Explicit
 '$Include: 'INCLUDES\VGA.BI'
 '$Include: 'INCLUDES\TIMING.BI'
 '$Include: 'INCLUDES\FPS.BI'
-'$include: 'INCLUDES\CONV.BI'
+'$Include: 'INCLUDES\CONV.BI'
 
 
 Const K_ESC = 27
@@ -68,7 +68,7 @@ End Function
 '$Include: 'INCLUDES\VGA.BM'
 '$Include: 'INCLUDES\BITMAP.BM'
 '$Include: 'INCLUDES\CONV.BM'
-'$include: 'INCLUDES\TIMING.BM'
+'$Include: 'INCLUDES\TIMING.BM'
 '$Include: 'INCLUDES\FPS.BM'
 
 
@@ -80,6 +80,7 @@ Sub INIT
   ' Turns off black background of _PrintString
   _PrintMode _KeepBackground
   _Font 8
+  _ScreenMove _Middle
 
   Randomize Timer
 

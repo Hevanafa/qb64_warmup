@@ -72,6 +72,7 @@ freeImage imgMacJago
 freeImage imgTilemap
 freeImage imgGasolineMaid
 freeBMFont font, fontGlyphs()
+closeLogger
 
 initTextMode
 
@@ -96,9 +97,25 @@ End Function
 '$include: 'INCLUDES\STRINGS.BM'
 
 
+sub initLogger
+  open "LOG.TXT" for output as #99
+end sub
+
+sub writeLog(msg as string)
+  print #99, msg
+end sub
+
+sub closeLogger
+  close #99
+end sub
+
+
 Sub INIT
+  initLogger
   initBuffer
   startScaledMode
+
+  writeLog "Starting game..."
 
   _Title "Hello again QB64!"
 

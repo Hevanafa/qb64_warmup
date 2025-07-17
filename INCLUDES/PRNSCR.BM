@@ -1,0 +1,28 @@
+Sub PerformScreenshot
+  Dim dump$
+  $If WEB Then
+    Print "Not supported!";
+    Flush
+    Input "", dump$
+  $Else
+    If Not _DirExists("screenshots") Then
+      MkDir "screenshots"
+    End If
+
+    Dim filename$
+    filename$ = "screenshots\" + LTrim$(Str$(CLng(Timer))) + ".png"
+
+    _SaveImage filename$, scaled
+
+    Locate 2, 1
+    Print "Saved as " + filename$;
+    Locate 3, 1
+    Print "Press Enter"
+
+    ' Flush
+    _PutImage , buffer, scaled
+    _Display
+
+    Input "", dump$
+  $End If
+End Sub

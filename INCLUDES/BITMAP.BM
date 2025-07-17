@@ -21,7 +21,7 @@ End Sub
 
 Sub sprRegion (imgHandle As Long, srcX%, srcY%, srcW%, srcH%, destX%, destY%)
   If Not isImageSet(imgHandle) Then Exit Sub
-  _PutImage (destX%, destY%)-(destX% + srcW%, destY% + srcH%), imgHandle, surface, (srcX%, srcY%)-(srcX% + srcW%, srcY% + srcH%)
+  _PutImage (destX%, destY%)-(destX% + srcW%, destY% + srcH%), imgHandle, vgaSurface, (srcX%, srcY%)-(srcX% + srcW%, srcY% + srcH%)
 End Sub
 
 Function isImageSet (imgHandle As Long)

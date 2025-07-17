@@ -162,9 +162,7 @@ Sub NDraw
   
 
   drawFPS
-
-  _PutImage , surface, scaled
-  _Display
+  flush
 End Sub
 
 

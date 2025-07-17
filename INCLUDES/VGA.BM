@@ -12,14 +12,19 @@ Sub NPset (x As Integer, y As Integer, colour As Long)
 End Sub
 
 Sub initBuffer
-  surface = _NewImage(320, 200, 32)
-  scaled = _NewImage(640, 400, 32)
+  vgaSurface = _NewImage(320, 200, 32)
+  vgaScaled = _NewImage(640, 400, 32)
 End Sub
 
 sub startScaledMode
-  Screen scaled: _Dest surface: _Delay 0.1: _Display
+  Screen vgaScaled: _Dest vgaSurface: _Delay 0.1: _Display
 end sub
 
 sub initTextMode
   screen 0
+end sub
+
+sub flush
+  _PutImage , vgaSurface, vgaScaled
+  _Display
 end sub

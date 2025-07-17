@@ -1,4 +1,4 @@
 $IncludeOnce
 
-Common Shared As Long surface, scaled
+Common Shared As Long vgaSurface, vgaScaled
 

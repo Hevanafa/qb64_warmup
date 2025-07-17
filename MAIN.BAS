@@ -149,13 +149,14 @@ Sub NDraw
 
   NPset 100, 100, &HFFFFFFFF
 
-  nprint "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, &hFFFFFFFF
+  ' nprint "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, &hFFFFFFFF
+  printBMFont "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, font, fontGlyphs()
   
   ' nprint "Handle: " + i32str(imgMacJago), 10, 30, &HFFFFFFFF
 
   ' spr imgMacJago, 10, 20
   ' spr imgTilemap, 10, 10
-  sprRegion imgTilemap, 34, 17, 16, 16, 10, 30
+  sprRegion imgTilemap, 34, 17, 16, 16, 10, 60
   ' _putimage (10, 20), imgMacJago
   sprWithCamera imgGasolineMaid, 50, 50
   

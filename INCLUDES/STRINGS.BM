@@ -1,0 +1,67 @@
+$IncludeOnce
+
+function startsWith%(text as string, searchStr as string)
+  startsWith% = (left$(text, len(searchStr)) = searchStr)
+end function
+
+sub split(text as string, delimiter as string, outputAry() as string)
+  dim as integer i, startPos, delimPos
+  dim as string token
+
+  for i = 0 to ubound(outputAry)
+    outputAry(i) = ""
+  next
+
+  startPos = 1
+  i = 0
+
+  do while startPos <= len(text) and i <= ubound(outputAry)
+    delimPos = instr(startPos, text, delimiter)
+
+    if delimPos = 0 then
+      token = mid$(text, startPos)
+    else
+      token = mid$(text, startPos, delimPos  - startPos)
+    end if
+
+    outputAry(i) = token
+    i = i + 1
+
+    if delimPos = 0 then exit do
+    startPos = delimPos + len(delimiter)
+  loop
+end sub
+
+
+function contains% (source as string, searchStr as string)
+  contains% = instr(source, searchStr) <> 0
+end function
+
+
+function replaceAll$(source as string, searchStr as string, replaceStr as string)
+  dim result as string
+  dim as integer foundPos, lastPos
+
+  if len(searchStr) = 0 then
+    replaceAll$ = source
+    exit function
+  end if
+
+  result = ""
+  lastPos = 1
+
+  do
+    foundPos = instr(lastPos, source, searchStr)
+
+    if foundPos = 0 then
+      result = result + mid$(source, lastPos)
+      exit do
+    else
+      result = result + mid$(source, lastPos, foundPos - lastPos)
+      result = result + replaceStr
+      lastPos = foundPos + len(searchStr)
+    end if
+  loop
+
+  replaceAll$ = result
+end function

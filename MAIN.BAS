@@ -7,6 +7,7 @@ Option _Explicit
 '$Include: 'INCLUDES\FPS.BI'
 '$Include: 'INCLUDES\CONV.BI'
 '$include: 'INCLUDES\CAMERA.BI'
+'$include: 'INCLUDES\GRAPHICS.BI'
 
 
 Const K_ESC = 27
@@ -27,7 +28,7 @@ Const cornflowerBlue = &HFF6495ED
 
 ' Game state
 Dim Shared done: done = False
-Common Shared As Long imgMacJago, imgTilemap
+Common Shared As Long imgMacJago, imgTilemap, imgGasolineMaid
 Dim Shared As Integer x, y
 
 ' More of your game state here
@@ -61,10 +62,17 @@ $Else
 
 $End If
 
+' Your cleanup code here
 freeImage imgMacJago
+freeImage imgTilemap
+freeImage imgGasolineMaid
+
+initTextMode
 
 System
 
+
+' implementation
 
 Function isKeyDown% (keycode As Integer)
   isKeyDown = _KeyDown(keycode)
@@ -77,10 +85,12 @@ End Function
 '$Include: 'INCLUDES\TIMING.BM'
 '$Include: 'INCLUDES\FPS.BM'
 '$include: 'INCLUDES\CAMERA.BM'
+'$include: 'INCLUDES\GRAPHICS.BM'
 
 
 Sub INIT
   initBuffer
+  startScaledMode
 
   _Title "Hello again QB64!"
 
@@ -96,6 +106,7 @@ Sub INIT
 
   ' loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
   loadImage imgTilemap, "IMG\tilemap.png"
+  loadImage imgGasolineMaid, "IMG\gasoline_maid.png"
 End Sub
 
 Sub NUpdate
@@ -125,7 +136,7 @@ Sub NDraw
 
   NPrint f32str(dt), 8, 20, &HFFFFFFFF
 
-  Circle (x, y), 5, &HFFFFFFFF
+  ' Circ x, y, 5, &HFFFFFFFF
 
   NPset 100, 100, &HFFFFFFFF
 
@@ -137,6 +148,7 @@ Sub NDraw
   ' spr imgTilemap, 10, 10
   sprRegion imgTilemap, 34, 17, 16, 16, 10, 30
   ' _putimage (10, 20), imgMacJago
+  sprWithCamera imgGasolineMaid, 50, 50
   
 
   drawFPS

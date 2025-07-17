@@ -86,6 +86,7 @@ Function isKeyDown% (keycode As Integer)
 End Function
 
 
+'$include: 'INCLUDES\LOGGER.BM'
 '$Include: 'INCLUDES\VGA.BM'
 '$Include: 'INCLUDES\BITMAP.BM'
 '$Include: 'INCLUDES\CONV.BM'
@@ -95,19 +96,6 @@ End Function
 '$include: 'INCLUDES\GRAPHICS.BM'
 '$include: 'INCLUDES\BMFONT.BM'
 '$include: 'INCLUDES\STRINGS.BM'
-
-
-sub initLogger
-  open "LOG.TXT" for output as #99
-end sub
-
-sub writeLog(msg as string)
-  print #99, msg
-end sub
-
-sub closeLogger
-  close #99
-end sub
 
 
 Sub INIT

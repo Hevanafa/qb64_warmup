@@ -1,0 +1,13 @@
+$IncludeOnce
+
+sub initLogger
+  open "LOG.TXT" for output as #99
+end sub
+
+sub writeLog(msg as string)
+  print #99, msg
+end sub
+
+sub closeLogger
+  close #99
+end sub

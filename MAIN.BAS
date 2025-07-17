@@ -8,6 +8,7 @@ Option _Explicit
 '$Include: 'INCLUDES\CONV.BI'
 '$include: 'INCLUDES\CAMERA.BI'
 '$include: 'INCLUDES\GRAPHICS.BI'
+'$include: 'INCLUDES\BMFONT.BI'
 
 
 Const K_ESC = 27
@@ -29,6 +30,10 @@ Const cornflowerBlue = &HFF6495ED
 ' Game state
 Dim Shared done: done = False
 Common Shared As Long imgMacJago, imgTilemap, imgGasolineMaid
+common shared font as TBMFont
+common shared fontGlyphs() as TBMFontGlyph
+redim as TBMFontGlyph fontGlyphs(32 to 126)
+
 Dim Shared As Integer x, y
 
 ' More of your game state here
@@ -66,6 +71,7 @@ $End If
 freeImage imgMacJago
 freeImage imgTilemap
 freeImage imgGasolineMaid
+freeBMFont font, fontGlyphs()
 
 initTextMode
 
@@ -86,6 +92,8 @@ End Function
 '$Include: 'INCLUDES\FPS.BM'
 '$include: 'INCLUDES\CAMERA.BM'
 '$include: 'INCLUDES\GRAPHICS.BM'
+'$include: 'INCLUDES\BMFONT.BM'
+'$include: 'INCLUDES\STRINGS.BM'
 
 
 Sub INIT
@@ -107,6 +115,7 @@ Sub INIT
   ' loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
   loadImage imgTilemap, "IMG\tilemap.png"
   loadImage imgGasolineMaid, "IMG\gasoline_maid.png"
+  loadBMFont font, fontGlyphs(), "FONTS\P8.TXT"
 End Sub
 
 Sub NUpdate

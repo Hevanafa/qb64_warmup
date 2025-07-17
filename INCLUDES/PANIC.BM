@@ -1,0 +1,10 @@
+$IncludeOnce
+
+sub panicHalt(msg as string)
+  dim dump$
+
+  screen 0
+  print msg
+  input "Press Enter to end programme"; dump$
+  end 1
+end sub

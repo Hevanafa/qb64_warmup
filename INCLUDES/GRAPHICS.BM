@@ -1,0 +1,5 @@
+$IncludeOnce
+
+sub circ(x as integer, y as integer, radius as integer, colour as long)
+  circle (x, y), radius, colour, 0, 2 * PI, 1
+end sub

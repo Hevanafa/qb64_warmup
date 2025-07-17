@@ -1,0 +1,9 @@
+$IncludeOnce
+
+sub sprWithCamera(imgHandle as long, x as integer, y as integer)
+  if not isImageSet(imgHandle) then exit sub
+
+  _putimage (x - cameraX, y - cameraY), imgHandle
+end sub
+
+'$include: 'BITMAP.BM'

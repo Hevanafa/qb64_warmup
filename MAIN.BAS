@@ -6,6 +6,7 @@ Option _Explicit
 '$Include: 'INCLUDES\TIMING.BI'
 '$Include: 'INCLUDES\FPS.BI'
 '$Include: 'INCLUDES\CONV.BI'
+'$include: 'INCLUDES\CAMERA.BI'
 
 
 Const K_ESC = 27
@@ -14,6 +15,11 @@ Const K_W = 119
 Const K_A = 97
 Const K_S = 115
 Const K_D = 100
+
+const K_UP = 18432
+const K_DOWN = 20480
+const K_LEFT = 19200
+const K_RIGHT = 19712
 
 Const False = 0
 Const True = Not False
@@ -70,6 +76,7 @@ End Function
 '$Include: 'INCLUDES\CONV.BM'
 '$Include: 'INCLUDES\TIMING.BM'
 '$Include: 'INCLUDES\FPS.BM'
+'$include: 'INCLUDES\CAMERA.BM'
 
 
 Sub INIT
@@ -102,6 +109,12 @@ Sub NUpdate
   If isKeyDown(K_S) Then y = y + 1
   If isKeyDown(K_A) Then x = x - 1
   If isKeyDown(K_D) Then x = x + 1
+
+  if isKeyDown(K_UP) then cameraY = cameraY - 1
+  if isKeyDown(K_DOWN) then cameraY = cameraY + 1
+  if isKeyDown(K_LEFT) then cameraX = cameraX - 1
+  if isKeyDown(K_RIGHT) then cameraX = cameraX + 1
+  
 End Sub
 
 
@@ -116,6 +129,8 @@ Sub NDraw
 
   NPset 100, 100, &HFFFFFFFF
 
+  nprint "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, &hFFFFFFFF
+  
   ' nprint "Handle: " + i32str(imgMacJago), 10, 30, &HFFFFFFFF
 
   ' spr imgMacJago, 10, 20

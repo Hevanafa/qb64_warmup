@@ -84,6 +84,7 @@ $End If
 closeLogger
 
 initTextMode
+_mouseShow
 
 System
 
@@ -150,6 +151,8 @@ End Function
 
 
 Sub INIT
+  _mouseHide
+
   initLogger
   initBuffer
   startScaledMode

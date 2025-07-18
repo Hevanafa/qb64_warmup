@@ -19,7 +19,7 @@ type TPhysicsRect
   as double vx, vy
 end type
 
-const GRAVITY = 0.01 ' Acceleration, applied per frame
+const GRAVITY# = 0.03 ' Acceleration, applied per frame
 
 Const K_ESC = 27
 
@@ -27,6 +27,7 @@ Const K_W = 119
 Const K_A = 97
 Const K_S = 115
 Const K_D = 100
+const K_Z = 122
 
 const K_UP = 18432
 const K_DOWN = 20480
@@ -35,16 +36,16 @@ const K_RIGHT = 19712
 
 Const False = 0
 Const True = Not False
-Const cornflowerBlue = &HFF6495ED
+Const cornflowerBlue& = &HFF6495ED
 
 ' Game state
 Dim Shared done: done = False
+dim shared isGrounded: isGrounded = false
 ' Dim Shared As Integer x, y
 
 ' More of your game state here
 
 Dim Shared As Double nextUpdateTick
-' dim shared as TRect playerZone
 dim shared as TPhysicsRect playerZone
 
 
@@ -101,6 +102,7 @@ sub updatePhysics
   if playerZone.y + playerZone.height >= _height then 
     playerZone.y = _height - playerZone.height
     playerZone.vy = 0
+    isGrounded = true
   end if
 end sub
 
@@ -123,6 +125,11 @@ end sub
 sub drawPhysicsZone(zone as TPhysicsRect)
   rect zone.x, zone.y, zone.x + zone.width - 1, zone.y + zone.height - 1, &hFF808000
   NPset zone.x, zone.y, &hFFFFFFFF
+end sub
+
+sub jump
+  playerZone.vy = -1.5
+  isGrounded = false
 end sub
 
 
@@ -177,6 +184,10 @@ Sub NUpdate
   ' If isKeyDown(K_S) Then y = y + 1
   If isKeyDown(K_A) Then playerZone.x = playerZone.x - 1
   If isKeyDown(K_D) Then playerZone.x = playerZone.x + 1
+
+  if isGrounded then
+    if isKeyDown(K_Z) then jump
+  end if
 
   if isKeyDown(K_UP) then cameraY = cameraY - 1
   if isKeyDown(K_DOWN) then cameraY = cameraY + 1

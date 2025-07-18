@@ -40,7 +40,9 @@ Const cornflowerBlue& = &HFF6495ED
 
 ' Game state
 Dim Shared done: done = False
-dim shared isGrounded: isGrounded = false
+dim shared isGrounded, isJumping
+dim shared as double jumpEndTick
+
 ' Dim Shared As Integer x, y
 
 ' More of your game state here
@@ -128,8 +130,9 @@ sub drawPhysicsZone(zone as TPhysicsRect)
 end sub
 
 sub jump
-  playerZone.vy = -1.5
   isGrounded = false
+  isJumping = true
+  jumpEndTick = getTimer + 0.5
 end sub
 
 
@@ -185,8 +188,22 @@ Sub NUpdate
   If isKeyDown(K_A) Then playerZone.x = playerZone.x - 1
   If isKeyDown(K_D) Then playerZone.x = playerZone.x + 1
 
-  if isGrounded then
+  if isGrounded and not isJumping then
     if isKeyDown(K_Z) then jump
+  end if
+
+  if isJumping then
+    playerZone.vy = -1.5
+
+    if isKeyDown(K_Z) then
+      if getTimer >= jumpEndTick then
+        isJumping = false
+        playerZone.vy = 0
+      end if
+    else
+      isJumping = false
+      playerZone.vy = 0
+    end if
   end if
 
   if isKeyDown(K_UP) then cameraY = cameraY - 1

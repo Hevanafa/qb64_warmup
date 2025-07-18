@@ -3,3 +3,11 @@ $IncludeOnce
 sub circ(x as integer, y as integer, radius as integer, colour as long)
   circle (x, y), radius, colour, 0, 2 * PI, 1
 end sub
+
+sub rect(x0 as integer, y0 as integer, x1 as integer, y1 as integer, colour as long)
+  line (x0, y0)-(x1, y1), colour, B
+end sub
+
+sub rectfill(x0 as integer, y0 as integer, x1 as integer, y1 as integer, colour as long)
+  line (x0, y0)-(x1, y1), colour, BF
+end sub

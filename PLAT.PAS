@@ -10,6 +10,9 @@ Option _Explicit
 '$include: 'INCLUDES\GRAPHICS.BI'
 '$include: 'INCLUDES\BMFONT.BI'
 
+type TRect
+  as integer x, y, width, height
+end type
 
 Const K_ESC = 27
 
@@ -29,16 +32,12 @@ Const cornflowerBlue = &HFF6495ED
 
 ' Game state
 Dim Shared done: done = False
-Common Shared As Long imgMacJago, imgTilemap, imgGasolineMaid
-common shared font as TBMFont
-common shared fontGlyphs() as TBMFontGlyph
-redim as TBMFontGlyph fontGlyphs(32 to 126)
-
 Dim Shared As Integer x, y
 
 ' More of your game state here
 
 Dim Shared As Double nextUpdateTick
+dim shared as TRect playerZone
 
 
 INIT
@@ -68,10 +67,6 @@ $Else
 $End If
 
 ' Your cleanup code here
-freeImage imgMacJago
-freeImage imgTilemap
-freeImage imgGasolineMaid
-freeBMFont font, fontGlyphs()
 closeLogger
 
 initTextMode
@@ -80,11 +75,21 @@ System
 
 
 ' implementation
+sub updatePlayerZone
+  playerZone.x = x
+  playerZone.y = y
+  playerZone.width = 32
+  playerZone.height = 32
+end sub
+
+sub drawZone(zone as TRect)
+  rect zone.x, zone.y, zone.x + zone.width - 1, zone.y + zone.height - 1, &hFFFFFFFF
+end sub
+
 
 Function isKeyDown% (keycode As Integer)
   isKeyDown = _KeyDown(keycode)
 End Function
-
 
 '$include: 'INCLUDES\LOGGER.BM'
 '$Include: 'INCLUDES\VGA.BM'
@@ -105,7 +110,7 @@ Sub INIT
 
   writeLog "Starting game..."
 
-  _Title "Hello again QB64!"
+  _Title "Platforming"
 
   ' Turns off black background of _PrintString
   _PrintMode _KeepBackground
@@ -118,9 +123,6 @@ Sub INIT
   y = 100
 
   ' loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
-  loadImage imgTilemap, "IMG\tilemap.png"
-  loadImage imgGasolineMaid, "IMG\gasoline_maid.png"
-  loadBMFont font, fontGlyphs(), "FONTS\P8.TXT"
 End Sub
 
 Sub NUpdate
@@ -139,32 +141,18 @@ Sub NUpdate
   if isKeyDown(K_DOWN) then cameraY = cameraY + 1
   if isKeyDown(K_LEFT) then cameraX = cameraX - 1
   if isKeyDown(K_RIGHT) then cameraX = cameraX + 1
-  
+
+
+  updatePlayerZone
 End Sub
 
 
 Sub NDraw
   Cls , cornflowerBlue
 
-  NPrint "Hello again QB64!", 8, 8, &HFFFFFFFF
+  ' rect 10, 10, 25, 50, &hFFFFFFFF
+  drawZone playerZone
 
-  NPrint f32str(dt), 8, 20, &HFFFFFFFF
-
-  ' Circ x, y, 5, &HFFFFFFFF
-
-  NPset 100, 100, &HFFFFFFFF
-
-  ' nprint "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, &hFFFFFFFF
-  printBMFont "Camera: {" + i32str(cameraX) + ", " + i32str(cameraY) + "}", 10, 40, font, fontGlyphs()
-  
-  ' nprint "Handle: " + i32str(imgMacJago), 10, 30, &HFFFFFFFF
-
-  ' spr imgMacJago, 10, 20
-  ' spr imgTilemap, 10, 10
-  sprRegion imgTilemap, 34, 17, 16, 16, 10, 60
-  ' _putimage (10, 20), imgMacJago
-  sprWithCamera imgGasolineMaid, 50, 50
-  
 
   drawFPS
   flush

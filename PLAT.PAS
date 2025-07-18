@@ -39,6 +39,9 @@ Const False = 0
 Const True = Not False
 Const cornflowerBlue& = &HFF6495ED
 
+' Mouse inputs
+dim shared as integer mouseX, mouseY, mouseButton
+
 ' Game state
 Dim Shared as integer done: done = False
 dim shared as integer _
@@ -149,6 +152,16 @@ End Function
 '$include: 'INCLUDES\BMFONT.BM'
 '$include: 'INCLUDES\STRINGS.BM'
 
+sub updateMouse
+  while _mouseInput
+    mouseX = _mouseX \ 2
+    mouseY = _mouseY \ 2
+
+    ' The signs have to be flipped due to how True is encoded as -1
+    mouseButton = _shl(-_mouseButton(2), 1) + -_mouseButton(1)
+  wend
+end sub
+
 
 Sub INIT
   _mouseHide
@@ -179,6 +192,7 @@ End Sub
 Sub NUpdate
   updateDeltaTime
   incrementFPS
+  updateMouse
 
   ' Handle inputs
   If isKeyDown(K_ESC) Then done = True
@@ -226,6 +240,10 @@ Sub NDraw
   Cls , cornflowerBlue
 
   ' rect 10, 10, 25, 50, &hFFFFFFFF
+  nPrint "Mouse: {" + i32str(mouseX) + ", " + i32str(mouseY) + "}", 0, 0, &hFFFFFFFF
+  nPrint "Buttons: " + i32str(mouseButton), 0, 8, &hFFFFFFFF
+  nPset mouseX, mouseY, &hFFFFFFFF
+
   drawPhysicsZone playerZone
 
   drawFPS

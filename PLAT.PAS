@@ -39,8 +39,8 @@ Const True = Not False
 Const cornflowerBlue& = &HFF6495ED
 
 ' Game state
-Dim Shared done: done = False
-dim shared isGrounded, isJumping
+Dim Shared as integer done: done = False
+dim shared as integer isGrounded, isJumping
 dim shared as double jumpEndTick
 
 ' Dim Shared As Integer x, y
@@ -129,12 +129,6 @@ sub drawPhysicsZone(zone as TPhysicsRect)
   NPset zone.x, zone.y, &hFFFFFFFF
 end sub
 
-sub jump
-  isGrounded = false
-  isJumping = true
-  jumpEndTick = getTimer + 0.5
-end sub
-
 
 Function isKeyDown% (keycode As Integer)
   isKeyDown = _KeyDown(keycode)
@@ -189,7 +183,11 @@ Sub NUpdate
   If isKeyDown(K_D) Then playerZone.x = playerZone.x + 1
 
   if isGrounded and not isJumping then
-    if isKeyDown(K_Z) then jump
+    if isKeyDown(K_Z) then
+      isGrounded = false
+      isJumping = true
+      jumpEndTick = getTimer + 0.5
+    end if
   end if
 
   if isJumping then

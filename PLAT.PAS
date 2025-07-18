@@ -33,6 +33,7 @@ const K_UP = 18432
 const K_DOWN = 20480
 const K_LEFT = 19200
 const K_RIGHT = 19712
+const K_SPACEBAR = 32
 
 Const False = 0
 Const True = Not False
@@ -40,7 +41,9 @@ Const cornflowerBlue& = &HFF6495ED
 
 ' Game state
 Dim Shared as integer done: done = False
-dim shared as integer isGrounded, isJumping
+dim shared as integer _
+  isGrounded, isJumping, hasJumpButtonDown
+
 dim shared as double jumpEndTick
 
 ' Dim Shared As Integer x, y
@@ -182,8 +185,10 @@ Sub NUpdate
   If isKeyDown(K_A) Then playerZone.x = playerZone.x - 1
   If isKeyDown(K_D) Then playerZone.x = playerZone.x + 1
 
+  hasJumpButtonDown = (isKeyDown(K_Z) or isKeyDown(K_SPACEBAR))
+
   if isGrounded and not isJumping then
-    if isKeyDown(K_Z) then
+    if hasJumpButtonDown then
       isGrounded = false
       isJumping = true
       jumpEndTick = getTimer + 0.5
@@ -193,7 +198,7 @@ Sub NUpdate
   if isJumping then
     playerZone.vy = -1.5
 
-    if isKeyDown(K_Z) then
+    if hasJumpButtonDown then
       if getTimer >= jumpEndTick then
         isJumping = false
         playerZone.vy = 0

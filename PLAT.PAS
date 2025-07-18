@@ -14,6 +14,13 @@ type TRect
   as integer x, y, width, height
 end type
 
+type TPhysicsRect
+  as double x, y, width, height
+  as double vx, vy
+end type
+
+const GRAVITY = 0.01 ' Acceleration, applied per frame
+
 Const K_ESC = 27
 
 Const K_W = 119
@@ -32,12 +39,13 @@ Const cornflowerBlue = &HFF6495ED
 
 ' Game state
 Dim Shared done: done = False
-Dim Shared As Integer x, y
+' Dim Shared As Integer x, y
 
 ' More of your game state here
 
 Dim Shared As Double nextUpdateTick
-dim shared as TRect playerZone
+' dim shared as TRect playerZone
+dim shared as TPhysicsRect playerZone
 
 
 INIT
@@ -75,15 +83,33 @@ System
 
 
 ' implementation
-sub updatePlayerZone
-  playerZone.x = x
-  playerZone.y = y
-  playerZone.width = 32
+
+sub updatePhysics
+  playerZone.vy = playerZone.vy + GRAVITY
+
+  playerZone.x = playerZone.x + playerZone.vx
+  playerZone.y = playerZone.y + playerZone.vy
+end sub
+
+sub initPlayerZone
+  playerZone.x = 160
+  playerZone.y = 100
+  playerZone.width = 24
   playerZone.height = 32
 end sub
 
+' sub updatePlayerZone
+'   playerZone.x = x
+'   playerZone.y = y
+' end sub
+
 sub drawZone(zone as TRect)
   rect zone.x, zone.y, zone.x + zone.width - 1, zone.y + zone.height - 1, &hFFFFFFFF
+end sub
+
+sub drawPhysicsZone(zone as TPhysicsRect)
+  rect zone.x, zone.y, zone.x + zone.width - 1, zone.y + zone.height - 1, &hFF808000
+  NPset zone.x, zone.y, &hFFFFFFFF
 end sub
 
 
@@ -119,8 +145,10 @@ Sub INIT
 
   Randomize Timer
 
-  x = 160
-  y = 100
+  ' x = 160
+  ' y = 100
+
+  initPlayerZone
 
   ' loadImage imgMacJago, "IMG\ntupin Mac Jago.png"
 End Sub
@@ -132,18 +160,18 @@ Sub NUpdate
   ' Handle inputs
   If isKeyDown(K_ESC) Then done = True
 
-  If isKeyDown(K_W) Then y = y - 1
-  If isKeyDown(K_S) Then y = y + 1
-  If isKeyDown(K_A) Then x = x - 1
-  If isKeyDown(K_D) Then x = x + 1
+  ' If isKeyDown(K_W) Then y = y - 1
+  ' If isKeyDown(K_S) Then y = y + 1
+  If isKeyDown(K_A) Then playerZone.x = playerZone.x - 1
+  If isKeyDown(K_D) Then playerZone.x = playerZone.x + 1
 
   if isKeyDown(K_UP) then cameraY = cameraY - 1
   if isKeyDown(K_DOWN) then cameraY = cameraY + 1
   if isKeyDown(K_LEFT) then cameraX = cameraX - 1
   if isKeyDown(K_RIGHT) then cameraX = cameraX + 1
 
-
-  updatePlayerZone
+  updatePhysics
+  ' updatePlayerZone
 End Sub
 
 
@@ -151,8 +179,7 @@ Sub NDraw
   Cls , cornflowerBlue
 
   ' rect 10, 10, 25, 50, &hFFFFFFFF
-  drawZone playerZone
-
+  drawPhysicsZone playerZone
 
   drawFPS
   flush

@@ -84,11 +84,24 @@ System
 
 ' implementation
 
+function getScreenWidth%
+  getScreenWidth = _width
+end function
+
+function getScreenHeight%
+  getScreenHeight = _height
+end function
+
 sub updatePhysics
   playerZone.vy = playerZone.vy + GRAVITY
 
   playerZone.x = playerZone.x + playerZone.vx
   playerZone.y = playerZone.y + playerZone.vy
+
+  if playerZone.y + playerZone.height >= _height then 
+    playerZone.y = _height - playerZone.height
+    playerZone.vy = 0
+  end if
 end sub
 
 sub initPlayerZone

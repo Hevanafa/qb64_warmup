@@ -19,6 +19,8 @@ type TPhysicsRect
   as double vx, vy
 end type
 
+' In case PI isn't included yet
+' const PI# = 3.1415926535
 const GRAVITY# = 0.03 ' Acceleration, applied per frame
 
 Const K_ESC = 27
@@ -100,6 +102,35 @@ end function
 
 function getScreenHeight%
   getScreenHeight = _height
+end function
+
+' Based on libc implementation
+function atan2#(y as double, x as double)
+  if y = 0 then
+    if x >= 0 then
+      atan2 = 0.0
+    else
+      atan2 = PI
+    end if
+
+  elseif y > 0 then
+    if x = 0 then
+      atan2 = PI / 2
+    elseif x > 0 then
+      atan2 = atn(y / x)
+    else
+      atan2 = PI - atn(y / x)
+    end if
+
+  else
+    if x = 0 then
+      atan2 = PI + PI / 2
+    elseif x > 0 then
+      atan2 = 2 * PI - atn(y / x)
+    else
+      atan2 = PI + atn(y / x)
+    end if
+  end if
 end function
 
 sub updatePhysics

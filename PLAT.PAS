@@ -104,34 +104,6 @@ function getScreenHeight%
   getScreenHeight = _height
 end function
 
-' Based on libc implementation
-function atan2#(y as double, x as double)
-  if y = 0 then
-    if x >= 0 then
-      atan2 = 0.0
-    else
-      atan2 = PI
-    end if
-
-  elseif y > 0 then
-    if x = 0 then
-      atan2 = PI / 2
-    elseif x > 0 then
-      atan2 = atn(y / x)
-    else
-      atan2 = PI - atn(y / x)
-    end if
-
-  else
-    if x = 0 then
-      atan2 = PI + PI / 2
-    elseif x > 0 then
-      atan2 = 2 * PI - atn(y / x)
-    else
-      atan2 = PI + atn(y / x)
-    end if
-  end if
-end function
 
 sub updatePhysics
   playerZone.vy = playerZone.vy + GRAVITY
@@ -173,6 +145,7 @@ Function isKeyDown% (keycode As Integer)
 End Function
 
 '$include: 'INCLUDES\LOGGER.BM'
+'$include: 'INCLUDES\MATHS.BM'
 '$Include: 'INCLUDES\VGA.BM'
 '$Include: 'INCLUDES\BITMAP.BM'
 '$Include: 'INCLUDES\CONV.BM'
